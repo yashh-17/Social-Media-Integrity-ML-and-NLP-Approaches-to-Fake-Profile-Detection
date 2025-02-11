@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fake Account Detector</title>
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let inputs = document.querySelectorAll("input");
+
+            inputs.forEach((input, index) => {
+                input.addEventListener("keydown", function (event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault(); // Prevent form submission
+
+                        // Move to next input field, if available
+                        let nextInput = inputs[index + 1];
+                        if (nextInput) {
+                            nextInput.focus();
+                        }
+                    }
+                });
+            });
+        });
+
         async function checkAccount() {
             let userData = {
                 name: document.getElementById("name").value,
@@ -25,12 +43,10 @@
                 });
 
                 let result = await response.json();
-                
-                if (result.error) {
-                    document.getElementById("result").innerText = "Error: " + result.error;
-                } else {
-                    document.getElementById("result").innerText = `Account Name: ${result.name}\nAccount is likely: ${result.result}`;
-                }
+
+                document.getElementById("result").innerText = result.error 
+                    ? "Error: " + result.error 
+                    : `Account Name: ${result.name}\nAccount is likely: ${result.result}`;
             } catch (error) {
                 console.error("Error:", error);
                 document.getElementById("result").innerText = "An error occurred. Please try again.";
