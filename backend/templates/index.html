@@ -8,29 +8,39 @@
         async function checkAccount() {
             let userData = {
                 name: document.getElementById("name").value,
-                statuses_count: parseFloat(document.getElementById("statuses_count").value),
-                followers_count: parseFloat(document.getElementById("followers_count").value),
-                friends_count: parseFloat(document.getElementById("friends_count").value),
-                favourites_count: parseFloat(document.getElementById("favourites_count").value),
-                listed_count: parseFloat(document.getElementById("listed_count").value),
-                created_at: document.getElementById("created_at").value,
+                statuses_count: parseFloat(document.getElementById("statuses_count").value) || 0,
+                followers_count: parseFloat(document.getElementById("followers_count").value) || 0,
+                friends_count: parseFloat(document.getElementById("friends_count").value) || 0,
+                favourites_count: parseFloat(document.getElementById("favourites_count").value) || 0,
+                listed_count: parseFloat(document.getElementById("listed_count").value) || 0,
+                created_at: document.getElementById("created_at").value || "unknown",
                 profile_image_url: document.getElementById("profile_image_url").value.toLowerCase() === "yes" ? "exists" : null
             };
-    
-            let response = await fetch("/predict", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(userData)
-            });
-    
-            let result = await response.json();
-            document.getElementById("result").innerText = "Account is likely: " + result.result; // Fix JSON key
+
+            try {
+                let response = await fetch("/predict", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(userData)
+                });
+
+                let result = await response.json();
+                
+                if (result.error) {
+                    document.getElementById("result").innerText = "Error: " + result.error;
+                } else {
+                    document.getElementById("result").innerText = `Account Name: ${result.name}\nAccount is likely: ${result.result}`;
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("result").innerText = "An error occurred. Please try again.";
+            }
         }
     </script>
-    
 </head>
 <body>
     <h1>Fake Account Detector</h1>
+    
     <label>Name:</label> <input type="text" id="name"><br>
     <label>Statuses Count:</label> <input type="number" id="statuses_count"><br>
     <label>Followers Count:</label> <input type="number" id="followers_count"><br>
@@ -41,6 +51,6 @@
     <label>Profile Image? (yes/no):</label> <input type="text" id="profile_image_url"><br>
 
     <button onclick="checkAccount()">Check Account</button>
-    <p id="result"></p>
+    <p id="result" style="font-weight: bold; color: blue;"></p>
 </body>
 </html>
