@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fake Account Detector</title>
+    <link rel="stylesheet" href="static/styles.css">
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let inputs = document.querySelectorAll("input");
@@ -55,18 +56,37 @@
     </script>
 </head>
 <body>
-    <h1>Fake Account Detector</h1>
-    
-    <label>Name:</label> <input type="text" id="name"><br>
-    <label>Statuses Count:</label> <input type="number" id="statuses_count"><br>
-    <label>Followers Count:</label> <input type="number" id="followers_count"><br>
-    <label>Friends Count:</label> <input type="number" id="friends_count"><br>
-    <label>Favourites Count:</label> <input type="number" id="favourites_count"><br>
-    <label>Listed Count:</label> <input type="number" id="listed_count"><br>
-    <label>Created At:</label> <input type="date" id="created_at"><br>
-    <label>Profile Image? (yes/no):</label> <input type="text" id="profile_image_url"><br>
+    <div class="container">
+        <div class="brand-logo"></div>
+        <div class="brand-title">FAKE ACCOUNT DETECTOR</div>
+        <div class="inputs">
+            <label>Name</label>
+            <input type="text" id="name" placeholder="Enter name" />
+            
+            <label>Statuses Count</label>
+            <input type="number" id="statuses_count" placeholder="Enter statuses count" />
+            
+            <label>Followers Count</label>
+            <input type="number" id="followers_count" placeholder="Enter followers count" />
+            
+            <label>Friends Count</label>
+            <input type="number" id="friends_count" placeholder="Enter friends count" />
+            
+            <label>Favourites Count</label>
+            <input type="number" id="favourites_count" placeholder="Enter favourites count" />
+            
+            <label>Listed Count</label>
+            <input type="number" id="listed_count" placeholder="Enter listed count" />
+            
+            <label>Created At</label>
+            <input type="date" id="created_at" />
+            
+            <label>Profile Image? (yes/no)</label>
+            <input type="text" id="profile_image_url" placeholder="yes or no" />
 
-    <button onclick="checkAccount()">Check Account</button>
-    <p id="result" style="font-weight: bold; color: blue;"></p>
+            <button onclick="checkAccount()">Check Account</button>
+        </div>
+        <p id="result" style="font-weight: bold; color: blue;"></p>
+    </div>
 </body>
 </html>
